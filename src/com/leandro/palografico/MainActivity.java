@@ -30,8 +30,8 @@ public class MainActivity extends Activity {
     
     public void mexerImagem(View v) {
     	bitmap = ImageTools.toGreyScale(bitmap);
-    	//bitmap = ImageTools.binaryImage(bitmap, 180);
-    	bitmap = ImageTools.binaryImageAndInvert(bitmap, 180);
+    	bitmap = ImageTools.binaryImage(bitmap, 180);
+    	//bitmap = ImageTools.binaryImageAndInvert(bitmap, 180);
     	
     	imageView.setImageBitmap(bitmap);    	
     }
@@ -70,6 +70,15 @@ public class MainActivity extends Activity {
     			"Pixels Pretos: "+nPretos
     			+ "\nPixels Brancos: "+nBrancos
     			+ "\nPixels Outras Cores: "+nOutras, 
+    			MainActivity.this);
+    }
+    
+    public void contarPalos(View v) {
+    	
+    	int nPalos = ImageTools.countObjects2(bitmap);
+    	
+    	GUI.showDialog("Contagem de Palos", 
+    			"Foram contados "+nPalos+" palos na imagem.", 
     			MainActivity.this);
     }
 }

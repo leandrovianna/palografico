@@ -13,15 +13,6 @@
         android:text="@string/texto"
         android:onClick="mexerImagem" />
 
-    <ImageView
-        android:id="@+id/image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/button2"
-        android:contentDescription="@string/hello_world"
-        android:minHeight="200dp"
-        android:minWidth="200dp" />
-
     <Button
         android:id="@+id/button2"
         android:layout_width="fill_parent"
@@ -30,5 +21,24 @@
         android:layout_below="@+id/button"
         android:onClick="testarBinarizacao"
         android:text="@string/texto2" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/button2"
+        android:onClick="contarPalos"
+        android:text="@string/texto3" />
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/button1"
+        android:contentDescription="@string/hello_world"
+        android:minHeight="200dp"
+        android:minWidth="200dp" />
 
 </RelativeLayout>
