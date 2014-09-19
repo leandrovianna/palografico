@@ -30,7 +30,7 @@ public class MainActivity extends Activity {
     
     public void mexerImagem(View v) {
     	bitmap = ImageTools.toGreyScale(bitmap);
-    	bitmap = ImageTools.binaryImage(bitmap, 180);
+    	bitmap = ImageTools.binaryImage(bitmap, 127);
     	//bitmap = ImageTools.binaryImageAndInvert(bitmap, 180);
     	
     	imageView.setImageBitmap(bitmap);    	
@@ -55,9 +55,6 @@ public class MainActivity extends Activity {
     			default:
     				nOutras++;
     			}
-    				
-//    			Log.d("MainActivity", 
-//    					"Cor (x="+i+", y ="+j+") = "+Color.red(bitmap.getPixel(i, j)));
     		}
     	
     	Log.i("MainActivity", "testarBinarizacao terminado.");
@@ -75,7 +72,7 @@ public class MainActivity extends Activity {
     
     public void contarPalos(View v) {
     	
-    	int nPalos = ImageTools.countObjects2(bitmap);
+    	int nPalos = ImageTools.countPalos(bitmap);
     	
     	GUI.showDialog("Contagem de Palos", 
     			"Foram contados "+nPalos+" palos na imagem.", 
