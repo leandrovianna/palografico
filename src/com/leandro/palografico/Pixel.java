@@ -57,11 +57,46 @@ public class Pixel {
 		return new Pixel(x-1, y, bitmap.getPixel(x-1, y), bitmap);
 	}
 	
-	public Pixel getNeighboBottom() {
+	public Pixel getNeighborBottom() {
 		return new Pixel(x, y+1, bitmap.getPixel(x, y+1), bitmap);
 	}
 	
 	public Pixel getNeighborRight() {
 		return new Pixel(x+1, y, bitmap.getPixel(x+1, y), bitmap);
+	}
+	
+	//Vizinhança de 8
+	public Pixel getNeighborNorth() {
+		return this.getNeighborUp();
+	}
+	
+	public Pixel getNeighborNorthEast() {
+		return new Pixel(x+1, y-1, bitmap.getPixel(x+1, y-1), bitmap);
+	}
+	
+	public Pixel getNeighborNorthWest() {
+		return new Pixel(x-1, y-1, bitmap.getPixel(x-1, y-1), bitmap);
+	}
+	
+	public Pixel getNeighborWest() {
+		return this.getNeighborLeft();
+	}
+	
+	////////////////////////////
+	
+	public Pixel getNeighborSouth() {
+		return this.getNeighborBottom();
+	}
+	
+	public Pixel getNeighborSouthWest() {
+		return new Pixel(x-1, y+1, bitmap.getPixel(x+1, y-1), bitmap);
+	}
+	
+	public Pixel getNeighborSouthEast() {
+		return new Pixel(x+1, y+1, bitmap.getPixel(x-1, y-1), bitmap);
+	}
+	
+	public Pixel getNeighborEast() {
+		return this.getNeighborRight();
 	}
 }

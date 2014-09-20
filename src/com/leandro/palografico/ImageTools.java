@@ -55,16 +55,19 @@ public class ImageTools {
 		return b;
 	}
 	
-	//Algorithm: Connected-component label - One component at a time
-	//FUNCIONANDO, MAS APENAS COM IMAGENS COM PALOS NÂO INCLINADOS
 	public static int countPalos(Bitmap b) {
+		return algorithmOneComponentAtTime8(b);
+	}
+	
+	//Algorithm: Connected-component label - One component at a time
+	//FUNCIONANDO, MAS APENAS COM IMAGENS COM PALOS NÃO INCLINADOS
+	public static int algorithmOneComponentAtTime(Bitmap b) {
 		Log.d("ImageTools", "Metodo countPalos");
 		
 		int image[][] = new int[b.getWidth()][b.getHeight()]; //armazena as labels
 		int curlab = 1; //current label
 		int foregroundColor = Color.BLACK; //color of objects (palos)
 		Queue<Pixel> queue = new LinkedList<Pixel>();
-		
 		
 		for (int x = 0; x < b.getWidth(); ++x) {
 			for (int y = 0; y < b.getHeight(); ++y) {
@@ -78,7 +81,7 @@ public class ImageTools {
 						Pixel p = queue.poll();
 						
 						Pixel pRight = p.getNeighborRight();
-						Pixel pBottom = p.getNeighboBottom();
+						Pixel pBottom = p.getNeighborBottom();
 						
 						if (pRight.getColor() == foregroundColor && image[pRight.getX()][pRight.getY()] == 0) {
 							image[pRight.getX()][pRight.getY()] = curlab;
@@ -96,15 +99,79 @@ public class ImageTools {
 			}
 		}
 		
-//		StringBuffer s = new StringBuffer();
-//		for (int i = 0; i < image.length; i++) {
-//			s.delete(0, s.length());
-//			
-//			for (int j = 0; j < image[i].length; j++)
-//				s.append(image[i][j]+" ");
-//			
-//			Log.d("Matriz image", s.toString());
-//		}
+		StringBuffer s = new StringBuffer();
+		for (int i = 0; i < image.length; i++) {
+			s.delete(0, s.length());
+			
+			for (int j = 0; j < image[i].length; j++)
+				s.append(image[i][j]+" ");
+			
+			Log.d("Matriz image", s.toString());
+		}
+
+		return curlab-1;
+	}
+	
+	public static int algorithmOneComponentAtTime8(Bitmap b) {
+		Log.d("ImageTools", "Metodo countPalos");
+		
+		int image[][] = new int[b.getWidth()][b.getHeight()]; //armazena as labels
+		int curlab = 1; //current label
+		int foregroundColor = Color.BLACK; //color of objects (palos)
+		Queue<Pixel> queue = new LinkedList<Pixel>();
+		
+		for (int x = 0; x < b.getWidth(); ++x) {
+			for (int y = 0; y < b.getHeight(); ++y) {
+				Pixel pixel = new Pixel(x, y, b.getPixel(x, y), b);
+				
+				if (pixel.getColor() == foregroundColor && image[x][y] == 0) {
+					image[x][y] = curlab;
+					queue.offer(pixel);
+					
+					while (queue.isEmpty() == false) {
+						Pixel p = queue.poll();
+						
+						Pixel pEast = p.getNeighborEast();
+						Pixel pSouth = p.getNeighborSouth();
+						Pixel pSouthWest = p.getNeighborSouthWest();
+						Pixel pSouthEast = p.getNeighborSouthEast();
+						
+						if (pEast.getColor() == foregroundColor && image[pEast.getX()][pEast.getY()] == 0) {
+							image[pEast.getX()][pEast.getY()] = curlab;
+							queue.offer(pEast);
+						}
+						
+						if (pSouth.getColor() == foregroundColor && image[pSouth.getX()][pSouth.getY()] == 0) {
+							image[pSouth.getX()][pSouth.getY()] = curlab;
+							queue.offer(pSouth);
+						}
+						
+						if (pSouthWest.getColor() == foregroundColor && image[pSouthWest.getX()][pSouthWest.getY()] == 0) {
+							image[pSouthWest.getX()][pSouthWest.getY()] = curlab;
+							queue.offer(pSouthWest);
+						}
+						
+						if (pSouthEast.getColor() == foregroundColor && image[pSouthEast.getX()][pSouthEast.getY()] == 0) {
+							image[pSouthEast.getX()][pSouthEast.getY()] = curlab;
+							queue.offer(pSouthEast);
+						}
+					}
+				} else continue;
+				
+				curlab++;
+			}
+		}
+		
+		StringBuffer s = new StringBuffer();
+		for (int i = 0; i < image.length; i++) {
+			s.delete(0, s.length());
+			
+			for (int j = 0; j < image[i].length; j++)
+				s.append(image[i][j]+" ");
+			
+			Log.d("Matriz image", s.toString());
+		}
+
 		return curlab-1;
 	}
 }

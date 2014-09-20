@@ -1072,7 +1072,8 @@ containing a value of this type.
         public static final int imagem_teste2=0x7f020058;
         public static final int palos=0x7f020059;
         public static final int palos2=0x7f02005a;
-        public static final int palos_old=0x7f02005b;
+        public static final int palos3=0x7f02005b;
+        public static final int palos_old=0x7f02005c;
     }
     public static final class id {
         public static final int action_bar=0x7f05001c;
@@ -1238,6 +1239,7 @@ containing a value of this type.
         public static final int texto=0x7f0a000f;
         public static final int texto2=0x7f0a0010;
         public static final int texto3=0x7f0a0011;
+        public static final int title_activity_log=0x7f0a0012;
     }
     public static final class style {
         /** 
