@@ -30,7 +30,7 @@ public class MainActivity extends Activity {
     
     public void mexerImagem(View v) {
     	bitmap = ImageTools.toGreyScale(bitmap);
-    	bitmap = ImageTools.binaryImage(bitmap, 127);
+    	bitmap = ImageTools.binaryImage(bitmap, 190);
     	//bitmap = ImageTools.binaryImageAndInvert(bitmap, 180);
     	
     	imageView.setImageBitmap(bitmap);    	

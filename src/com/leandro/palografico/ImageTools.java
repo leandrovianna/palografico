@@ -3,6 +3,8 @@ package com.leandro.palografico;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import com.leandro.palografico.twopass.TwoPass;
+
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.util.Log;
@@ -15,9 +17,14 @@ public class ImageTools {
 		for (int x = 0; x < b.getWidth(); ++x) {
 			for (int y = 0; y < b.getHeight(); ++y) {
 				int color = b.getPixel(x, y);
+				
+				int red = Color.red(color);
+				int green = Color.green(color);
+				int blue = Color.blue(color);
 
-				int luminacia = (Color.red(color) + Color.green(color) + Color.blue(color)) / 3;
-
+				//int luminacia = (Color.red(color) + Color.green(color) + Color.blue(color)) / 3;
+				int luminacia = (int) (red * 0.3 + green * 0.59 + blue * 0.11);
+				
 				b.setPixel(x, y, Color.rgb(luminacia, luminacia, luminacia));
 				//setando pixel com tom de cinza, gerado a partir da luminosidade
 			}
@@ -56,7 +63,11 @@ public class ImageTools {
 	}
 	
 	public static int countPalos(Bitmap b) {
-		return algorithmOneComponentAtTime8(b);
+		//return algorithmOneComponentAtTime8(b);
+		
+		TwoPass twoPass = new TwoPass(b);
+		
+		return twoPass.getNObjects();
 	}
 	
 	//Algorithm: Connected-component label - One component at a time
@@ -120,8 +131,8 @@ public class ImageTools {
 		int foregroundColor = Color.BLACK; //color of objects (palos)
 		Queue<Pixel> queue = new LinkedList<Pixel>();
 		
-		for (int x = 0; x < b.getWidth(); ++x) {
-			for (int y = 0; y < b.getHeight(); ++y) {
+		for (int y = 0; y < b.getHeight(); ++y) {
+			for (int x = 0; x < b.getWidth(); ++x) {
 				Pixel pixel = new Pixel(x, y, b.getPixel(x, y), b);
 				
 				if (pixel.getColor() == foregroundColor && image[x][y] == 0) {
@@ -166,12 +177,15 @@ public class ImageTools {
 		for (int i = 0; i < image.length; i++) {
 			s.delete(0, s.length());
 			
-			for (int j = 0; j < image[i].length; j++)
+			for (int j = 0; j < image[i].length; j++) {
 				s.append(image[i][j]+" ");
+			}
 			
 			Log.d("Matriz image", s.toString());
 		}
 
 		return curlab-1;
 	}
+	
+	//TODO: Implementar o algoritmo Two-Pass com Union-Find
 }
