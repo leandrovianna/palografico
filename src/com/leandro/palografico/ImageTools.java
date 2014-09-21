@@ -3,8 +3,6 @@ package com.leandro.palografico;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import com.leandro.palografico.twopass.TwoPass;
-
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.util.Log;
@@ -63,11 +61,7 @@ public class ImageTools {
 	}
 	
 	public static int countPalos(Bitmap b) {
-		//return algorithmOneComponentAtTime8(b);
-		
-		TwoPass twoPass = new TwoPass(b);
-		
-		return twoPass.getNObjects();
+		return algorithmOneComponentAtTime8(b);
 	}
 	
 	//Algorithm: Connected-component label - One component at a time
@@ -186,6 +180,4 @@ public class ImageTools {
 
 		return curlab-1;
 	}
-	
-	//TODO: Implementar o algoritmo Two-Pass com Union-Find
 }
