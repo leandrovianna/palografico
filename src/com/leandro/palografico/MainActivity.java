@@ -1,5 +1,7 @@
 package com.leandro.palografico;
 
+import com.leandro.palografico.hk.HoshenKopelman;
+
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -28,11 +30,30 @@ public class MainActivity extends Activity {
 		imageView.setImageBitmap(bitmap);
     }
     
-    public void mexerImagem(View v) {
-    	bitmap = ImageTools.toGreyScale(bitmap);
-    	bitmap = ImageTools.binaryImage(bitmap, 190);
-    	//bitmap = ImageTools.binaryImageAndInvert(bitmap, 180);
+    public void processarImagem(View v) {
+    	bitmap = ImageTool.convertToGreyScale(bitmap);
+    	bitmap = ImageTool.binaryImage(bitmap, 170);
     	
+    	//Instanciando algoritmo
+    	HoshenKopelman hk = new HoshenKopelman();    
+    	
+    	GUI.showDialog("Contagem de Palos", 
+    			"Foram contados "
+    			+ hk.countObjects(bitmap)
+    			+ " palos na imagem.", 
+    			MainActivity.this);
+    	
+    	bitmap = hk.createOutputImage();
+
+    	imageView.setImageBitmap(bitmap);
+    }
+    
+    
+    
+    public void mexerImagem(View v) {
+    	bitmap = ImageTool.convertToGreyScale(bitmap);
+    	bitmap = ImageTool.binaryImage(bitmap, 170);
+    
     	imageView.setImageBitmap(bitmap);    	
     }
     
@@ -70,12 +91,4 @@ public class MainActivity extends Activity {
     			MainActivity.this);
     }
     
-    public void contarPalos(View v) {
-    	
-    	int nPalos = ImageTools.countPalos(bitmap);
-    	
-    	GUI.showDialog("Contagem de Palos", 
-    			"Foram contados "+nPalos+" palos na imagem.", 
-    			MainActivity.this);
-    }
 }

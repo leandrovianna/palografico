@@ -6,6 +6,6 @@
     <string name="texto">Tratar Imagem</string>
     <string name="texto2">Testar Binarizacao</string>
     <string name="texto3">Contar Palos</string>
-    <string name="title_activity_log">LogActivity</string>
+    <string name="bt_processar">Processar Imagem</string>
 
 </resources>
