@@ -26,7 +26,7 @@ public class HoshenKopelman {
 	 * @return Número de Objetos
 	 * @author Leandro Vianna
 	 */
-	public int runAlgorithm(int [][] matrix) {
+	private int runAlgorithm(int [][] matrix) {
 		int m = matrix.length;
 		int n = matrix[0].length;
 		
