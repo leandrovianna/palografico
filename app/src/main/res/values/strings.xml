@@ -8,5 +8,7 @@
     <string name="button_camera_text">Tirar Foto!</string>
     <string name="title_activity_contar_palos">ContarPalosActivity</string>
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_camera">CameraActivity</string>
+    <string name="button_take_picture">Tirar Foto!</string>
 
 </resources>
