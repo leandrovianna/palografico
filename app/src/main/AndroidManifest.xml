@@ -23,12 +23,7 @@
         </activity>
         <activity
             android:name=".CameraActivity"
-            android:label="@string/title_activity_camera"
-            android:parentActivityName=".MainActivity"
-            android:screenOrientation="landscape">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.leandro.palografico.MainActivity" />
+            android:label="@string/title_activity_camera" >
         </activity>
     </application>
 

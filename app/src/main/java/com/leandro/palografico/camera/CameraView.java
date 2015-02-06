@@ -1,19 +1,14 @@
 package com.leandro.palografico.camera;
 
 import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Rect;
-import android.hardware.Camera;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
 
     private SurfaceHolder holder;
-    private MyCamera camera;
+    private PhoneCamera camera;
 
     public CameraView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -22,7 +17,7 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
         this.holder.addCallback(this);
     }
 
-    public CameraView(Context context, MyCamera camera)
+    public CameraView(Context context, PhoneCamera camera)
     {
         super(context);
 
@@ -31,11 +26,10 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
 
         this.holder = getHolder();
         this.holder.addCallback(this);
-
         this.camera = camera;
     }
 
-    public void setCamera(MyCamera camera) {
+    public void setCamera(PhoneCamera camera) {
         this.camera = camera;
     }
 
