@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.ImageFormat;
 import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Environment;
@@ -15,6 +16,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 public class PhoneCamera {
@@ -61,11 +63,30 @@ public class PhoneCamera {
         mCameraParams = mCamera.getParameters();
         mCameraParams.setRotation(90);
 
-        List<Camera.Size> sizes = mCameraParams.getSupportedPictureSizes();
-        mCameraParams.setPictureSize(
-                sizes.get(sizes.size()-1).width,
-                sizes.get(sizes.size()-1).height
-            );
+        Camera.Size bestSize = null;
+        List<Camera.Size> sizeList = mCameraParams.getSupportedPreviewSizes();
+        bestSize = sizeList.get(0);
+        for(int i = 1; i < sizeList.size(); i++){
+            if((sizeList.get(i).width * sizeList.get(i).height) > (bestSize.width * bestSize.height)){
+                bestSize = sizeList.get(i);
+            }
+
+            Log.i("PhoneCamera", "Picture Size: width:"+sizeList.get(i).width+
+                    " height:"+sizeList.get(i).height);
+        }
+
+        /*List<Integer> supportedPreviewFormats = mCameraParams.getSupportedPreviewFormats();
+        Iterator<Integer> supportedPreviewFormatsIterator = supportedPreviewFormats.iterator();
+        while(supportedPreviewFormatsIterator.hasNext()){
+            Integer previewFormat =supportedPreviewFormatsIterator.next();
+            if (previewFormat == ImageFormat.JPEG) {
+                mCameraParams.setPreviewFormat(previewFormat);
+            }
+        }*/
+
+        mCameraParams.setPreviewSize(bestSize.width, bestSize.height);
+
+        mCameraParams.setPictureSize(bestSize.width, bestSize.height);
 
         mCamera.setParameters(mCameraParams);
     }
