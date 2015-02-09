@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
+import android.graphics.Rect;
 import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Environment;
@@ -15,6 +16,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -71,8 +73,8 @@ public class PhoneCamera {
                 bestSize = sizeList.get(i);
             }
 
-            Log.i("PhoneCamera", "Picture Size: width:"+sizeList.get(i).width+
-                    " height:"+sizeList.get(i).height);
+//            Log.i("PhoneCamera", "Picture Size: width:"+sizeList.get(i).width+
+//                    " height:"+sizeList.get(i).height);
         }
 
         /*List<Integer> supportedPreviewFormats = mCameraParams.getSupportedPreviewFormats();
