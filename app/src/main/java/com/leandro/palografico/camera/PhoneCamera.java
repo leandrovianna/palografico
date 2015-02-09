@@ -146,8 +146,11 @@ public class PhoneCamera {
         context.sendBroadcast(broadcastIntent);
 
         //avisando para o Observer que a ação acabou
+        BitmapFactory.Options mutableOptions = new BitmapFactory.Options();
+        mutableOptions.inMutable = true;
+
         listener.onPictureIsTaken(
-                BitmapFactory.decodeFile(file.getPath()),
+                BitmapFactory.decodeFile(file.getPath(), mutableOptions),
                 file
         );
     }

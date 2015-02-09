@@ -2,6 +2,7 @@ package com.leandro.palografico;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Environment;
@@ -13,6 +14,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.leandro.palografico.hk.HoshenKopelman;
+
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -20,8 +23,10 @@ import java.util.Date;
 
 public class MainActivity extends ActionBarActivity {
 
-    private static final int CAPTURE_IMAGE_REQUEST_CODE = 102;
+    public static final int CAPTURE_IMAGE_REQUEST_CODE = 102;
     private Uri uriImage;
+
+    private Bitmap bitmapFromCamera;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +37,7 @@ public class MainActivity extends ActionBarActivity {
     public void openCamera(View view) {
 
         Intent intent = new Intent(this, CameraActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, CAPTURE_IMAGE_REQUEST_CODE);
     }
 
     @Override
@@ -42,8 +47,29 @@ public class MainActivity extends ActionBarActivity {
         if (requestCode == CAPTURE_IMAGE_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
 
+                bitmapFromCamera =
+                        data.getExtras().getParcelable(CameraActivity.BITMAP_EXTRA);
+
+                int nPalos = countPalos(processBitmap(bitmapFromCamera));
+
+                GUI.showDialog("Contagem de Palos Concluida",
+                        "São " + nPalos,
+                        this);
             }
         }
+    }
+
+    private Bitmap processBitmap(Bitmap bitmap) {
+
+        Bitmap newBitmap = ImageTool.convertToGreyScale(bitmap);
+        newBitmap = ImageTool.binaryImage(newBitmap, 120);
+
+        return newBitmap;
+    }
+
+    private int countPalos(Bitmap b) {
+        HoshenKopelman hk = new HoshenKopelman();
+        return hk.countObjects(b);
     }
 
     @Override

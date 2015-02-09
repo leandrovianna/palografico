@@ -1,5 +1,7 @@
 package com.leandro.palografico;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
@@ -8,12 +10,15 @@ import android.widget.Toast;
 import com.leandro.palografico.camera.CameraListener;
 import com.leandro.palografico.camera.CameraView;
 import com.leandro.palografico.camera.PhoneCamera;
+import com.leandro.palografico.hk.HoshenKopelman;
 import com.leandro.palografico.util.FullScreenActivity;
 
 import java.io.File;
 
 
 public class CameraActivity extends FullScreenActivity implements CameraListener {
+
+    public static final String BITMAP_EXTRA = "com.leandro.palografico.BITMAP_EXTRA";
 
     private PhoneCamera camera;
     private CameraView cameraView;
@@ -60,6 +65,12 @@ public class CameraActivity extends FullScreenActivity implements CameraListener
     @Override
     public void onPictureIsTaken(Bitmap bitmap, File imageFile) {
         Toast.makeText(this, "A foto foi tirada com sucesso!", Toast.LENGTH_SHORT).show();
+
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra(BITMAP_EXTRA, bitmap);
+        setResult(Activity.RESULT_OK, resultIntent);
+//        finishActivity(MainActivity.CAPTURE_IMAGE_REQUEST_CODE);
+        finish();
     }
 
     @Override
