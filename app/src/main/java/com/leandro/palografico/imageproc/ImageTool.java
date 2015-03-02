@@ -1,4 +1,4 @@
-package com.leandro.palografico;
+package com.leandro.palografico.imageproc;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;

@@ -1,24 +1,21 @@
 package com.leandro.palografico;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Bitmap;
+import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.leandro.palografico.camera.CameraListener;
 import com.leandro.palografico.camera.CameraView;
 import com.leandro.palografico.camera.PhoneCamera;
-import com.leandro.palografico.hk.HoshenKopelman;
 import com.leandro.palografico.util.FullScreenActivity;
 
 import java.io.File;
 
 
 public class CameraActivity extends FullScreenActivity implements CameraListener {
-
-    public static final String BITMAP_EXTRA = "com.leandro.palografico.BITMAP_EXTRA";
 
     private PhoneCamera camera;
     private CameraView cameraView;
@@ -31,50 +28,45 @@ public class CameraActivity extends FullScreenActivity implements CameraListener
         camera = new PhoneCamera(this, "PALOGRAFICO", this);
         cameraView = (CameraView) findViewById(R.id.cameraView);
         cameraView.setCamera(camera);
-    }
-
-    /** Acionado com o toque no botão de tirar foto */
-    public void takePicture(View v) {
-        camera.takePicture();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
         camera.start();
+
+        findViewById(R.id.takePictureButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                camera.takePicture();
+            }
+        });
     }
 
     @Override
-    protected void onPause() {
-        camera.destroy();
-        super.onPause();
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_camera, menu);
+        return true;
     }
 
     @Override
-    protected void onStop() {
-        camera.start();
-        super.onStop();
-    }
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
 
-    @Override
-    protected void onDestroy() {
-        camera.destroy();
-        super.onDestroy();
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onPictureIsTaken(Bitmap bitmap, File imageFile) {
-        Toast.makeText(this, "A foto foi tirada com sucesso!", Toast.LENGTH_SHORT).show();
 
-        Intent resultIntent = new Intent();
-        resultIntent.putExtra(BITMAP_EXTRA, bitmap);
-        setResult(Activity.RESULT_OK, resultIntent);
-//        finishActivity(MainActivity.CAPTURE_IMAGE_REQUEST_CODE);
-        finish();
     }
 
     @Override
     public void onPictureIsNotTaken() {
-        Toast.makeText(this, "ERRO", Toast.LENGTH_SHORT).show();
+
     }
 }
