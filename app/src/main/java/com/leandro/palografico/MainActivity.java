@@ -5,9 +5,11 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -30,9 +32,7 @@ public class MainActivity extends ActionBarActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == CAPTURE_IMAGE_REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-
-            }
+            Log.i("MainActivity", "A activity responde!");
         }
     }
 

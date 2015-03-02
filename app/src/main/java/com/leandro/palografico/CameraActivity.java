@@ -63,6 +63,11 @@ public class CameraActivity extends FullScreenActivity implements CameraListener
     @Override
     public void onPictureIsTaken(Bitmap bitmap, File imageFile) {
 
+        getIntent().putExtra("bitmap", bitmap);
+        getIntent().putExtra("file", imageFile);
+
+        finishActivity(MainActivity.CAPTURE_IMAGE_REQUEST_CODE);
+        finish();
     }
 
     @Override
