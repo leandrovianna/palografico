@@ -2,7 +2,7 @@ package com.leandro.palografico;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -11,28 +11,40 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
+import java.io.File;
+
 
 public class MainActivity extends ActionBarActivity {
 
-    public static final int CAPTURE_IMAGE_REQUEST_CODE = 102;
+    private ImageView imageView;
+    private Bitmap bitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        imageView = (ImageView) findViewById(R.id.imageView);
     }
 
     public void openCamera(View view) {
         Intent intent = new Intent(this, CameraActivity.class);
-        startActivityForResult(intent, CAPTURE_IMAGE_REQUEST_CODE);
+        startActivityForResult(intent, Constantes.CAPTURE_IMAGE_REQUEST_CODE);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == CAPTURE_IMAGE_REQUEST_CODE) {
-            Log.i("MainActivity", "A activity responde!");
+        if (requestCode == Constantes.CAPTURE_IMAGE_REQUEST_CODE) {
+
+            if (resultCode == RESULT_OK) {
+                Log.i("", "A foto foi tirada com sucesso e CameraActivity deu uma resposta");
+
+                File file = (File) data.getSerializableExtra(Constantes.FILE_EXTRA);
+                bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+                imageView.setImageBitmap(bitmap);
+            }
         }
     }
 

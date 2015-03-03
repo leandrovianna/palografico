@@ -1,6 +1,7 @@
 package com.leandro.palografico;
 
 import android.graphics.Bitmap;
+import android.support.v4.app.ShareCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -21,6 +22,12 @@ public class CameraActivity extends FullScreenActivity implements CameraListener
     private CameraView cameraView;
 
     @Override
+    protected void onDestroy() {
+        camera.destroy();
+        super.onDestroy();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
@@ -39,39 +46,20 @@ public class CameraActivity extends FullScreenActivity implements CameraListener
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_camera, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     public void onPictureIsTaken(Bitmap bitmap, File imageFile) {
 
-        getIntent().putExtra("bitmap", bitmap);
-        getIntent().putExtra("file", imageFile);
+        //Note: Passing a Bitmap for Extra cause a FAILED BINDER TRANSACTION (Bitmap is too large)
+//        getIntent().putExtra(Constantes.BITMAP_EXTRA, bitmap);
+        getIntent().putExtra(Constantes.FILE_EXTRA, imageFile);
 
-        finishActivity(MainActivity.CAPTURE_IMAGE_REQUEST_CODE);
+        setResult(RESULT_OK, getIntent());
+
         finish();
     }
 
     @Override
     public void onPictureIsNotTaken() {
-
+        setResult(RESULT_CANCELED, getIntent());
+        finish();
     }
 }
