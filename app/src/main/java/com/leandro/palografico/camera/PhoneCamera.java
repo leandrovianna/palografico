@@ -66,29 +66,30 @@ public class PhoneCamera {
         mCameraParams.setRotation(90);
 
         Camera.Size bestSize = null;
-        List<Camera.Size> sizeList = mCameraParams.getSupportedPreviewSizes();
-        bestSize = sizeList.get(0);
-        for(int i = 1; i < sizeList.size(); i++){
-            if((sizeList.get(i).width * sizeList.get(i).height) > (bestSize.width * bestSize.height)){
-                bestSize = sizeList.get(i);
-            }
+        List<Camera.Size> previewSizes = mCameraParams.getSupportedPreviewSizes();
+        bestSize = previewSizes.get(0);
+        for(int i = 1; i < previewSizes.size(); i++)
+            if ((previewSizes.get(i).width * previewSizes.get(i).height) > (bestSize.width * bestSize.height))
+                bestSize = previewSizes.get(i);
 
-//            Log.i("PhoneCamera", "Picture Size: width:"+sizeList.get(i).width+
-//                    " height:"+sizeList.get(i).height);
-        }
+        mCameraParams.setPreviewSize(bestSize.width, bestSize.height);
 
-        /*List<Integer> supportedPreviewFormats = mCameraParams.getSupportedPreviewFormats();
+        List<Camera.Size> sizes = mCameraParams.getSupportedPictureSizes();
+        bestSize = sizes.get(0);
+        for(int i = 1; i < sizes.size(); i++)
+            if ((sizes.get(i).width * sizes.get(i).height) > (bestSize.width * bestSize.height))
+                bestSize = sizes.get(i);
+
+        mCameraParams.setPictureSize(bestSize.width, bestSize.height);
+
+        List<Integer> supportedPreviewFormats = mCameraParams.getSupportedPreviewFormats();
         Iterator<Integer> supportedPreviewFormatsIterator = supportedPreviewFormats.iterator();
         while(supportedPreviewFormatsIterator.hasNext()){
             Integer previewFormat =supportedPreviewFormatsIterator.next();
             if (previewFormat == ImageFormat.JPEG) {
                 mCameraParams.setPreviewFormat(previewFormat);
             }
-        }*/
-
-        mCameraParams.setPreviewSize(bestSize.width, bestSize.height);
-
-        mCameraParams.setPictureSize(bestSize.width, bestSize.height);
+        }
 
         mCamera.setParameters(mCameraParams);
     }
@@ -166,10 +167,10 @@ public class PhoneCamera {
             }
         }
 
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String timeStamp = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date());
 
         File mediaFile = new File(mediaStorageDir.getPath() + File.separator +
-                "palos_teste_"+ timeStamp + ".jpg");
+                "palos-teste-"+ timeStamp + ".jpg");
 
         return mediaFile;
     }
