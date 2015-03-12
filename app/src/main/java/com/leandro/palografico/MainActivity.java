@@ -62,7 +62,9 @@ public class MainActivity extends ActionBarActivity {
 
                 File file = (File) data.getSerializableExtra(Constantes.FILE_EXTRA);
 
-                //TODO: Abrir a activity de contar os palos
+                Intent intent = new Intent(this, CountObjectsActivity.class);
+                intent.putExtra(Constantes.FILE_EXTRA, file);
+                startActivity(intent);
             }
         }
     }

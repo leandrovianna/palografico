@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 public class GUI {
 
-	public static AlertDialog showDialog(String title, String text, Context context) {
+	public static AlertDialog createMessageDialog(String title, String text, Context context) {
 		AlertDialog.Builder dialogo = new AlertDialog.Builder(context);
 		dialogo.setTitle(title)
 			.setMessage(text)
@@ -16,13 +16,13 @@ public class GUI {
         return dialogo.show();
 	}
 
-    public static AlertDialog showLoadingDialog(Context context) {
+    public static AlertDialog createLoadingDialog(Context context) {
 
         AlertDialog.Builder dialog = new AlertDialog.Builder(context);
 
         dialog.setTitle("Carregando...");
         dialog.setView(new ProgressBar(context));
 
-        return dialog.show();
+        return dialog.create();
     }
 }

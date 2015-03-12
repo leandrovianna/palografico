@@ -19,5 +19,9 @@
     <string name="text_select_image">Primeiro, precisamos da imagem de um teste:</string>
     <string name="button_take_picture">Tirar uma foto</string>
     <string name="button_select_from_gallery">Selecionar da galeria</string>
+    <string name="title_activity_count_objects">Contar Palos</string>
+
+    <!-- Counting Image Objects Activity - CountObjectsActivity -->
+    <string name="button_init_count">Iniciar Contagem</string>
 
 </resources>
