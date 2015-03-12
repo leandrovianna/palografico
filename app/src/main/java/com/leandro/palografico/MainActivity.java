@@ -1,35 +1,54 @@
 package com.leandro.palografico;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.Button;
+
+import com.leandro.palografico.camera.CameraActivity;
 
 import java.io.File;
 
 
 public class MainActivity extends ActionBarActivity {
 
-    private ImageView imageView;
-    private Bitmap bitmap;
+    private Button buttonCamera;
+    private Button buttonGallery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        imageView = (ImageView) findViewById(R.id.imageView);
+        buttonCamera = (Button) findViewById(R.id.buttonCamera);
+        buttonGallery = (Button) findViewById(R.id.buttonGallery);
+
+        buttonCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openCamera();
+            }
+        });
+
+        buttonGallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openGallery();
+            }
+        });
     }
 
-    public void openCamera(View view) {
+    public void openCamera() {
         Intent intent = new Intent(this, CameraActivity.class);
         startActivityForResult(intent, Constantes.CAPTURE_IMAGE_REQUEST_CODE);
+    }
+
+    private void openGallery() {
+        //TODO: Fazer activity com as fotos de testes tiradas anteriomente
     }
 
     @Override
@@ -42,8 +61,8 @@ public class MainActivity extends ActionBarActivity {
                 Log.i("", "A foto foi tirada com sucesso e CameraActivity deu uma resposta");
 
                 File file = (File) data.getSerializableExtra(Constantes.FILE_EXTRA);
-                bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
-                imageView.setImageBitmap(bitmap);
+
+                //TODO: Abrir a activity de contar os palos
             }
         }
     }
@@ -51,7 +70,7 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+//        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
