@@ -2,10 +2,8 @@ package com.leandro.palografico.camera;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
-import android.graphics.Rect;
 import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Environment;
@@ -16,16 +14,14 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
+@SuppressWarnings("deprecation")
 public class PhoneCamera {
 
     private final Context context;
     private Camera mCamera;
-    private Camera.Parameters mCameraParams;
     private final String albumName;
     private final CameraListener listener;
 
@@ -62,7 +58,7 @@ public class PhoneCamera {
     private void configureCamera() {
         mCamera.setDisplayOrientation(90);
 
-        mCameraParams = mCamera.getParameters();
+        Camera.Parameters mCameraParams = mCamera.getParameters();
         mCameraParams.setRotation(90);
 
         Camera.Size bestSize = null;
@@ -83,13 +79,10 @@ public class PhoneCamera {
         mCameraParams.setPictureSize(bestSize.width, bestSize.height);
 
         List<Integer> supportedPreviewFormats = mCameraParams.getSupportedPreviewFormats();
-        Iterator<Integer> supportedPreviewFormatsIterator = supportedPreviewFormats.iterator();
-        while(supportedPreviewFormatsIterator.hasNext()){
-            Integer previewFormat =supportedPreviewFormatsIterator.next();
-            if (previewFormat == ImageFormat.JPEG) {
-                mCameraParams.setPreviewFormat(previewFormat);
-            }
-        }
+
+        for (int format : supportedPreviewFormats)
+            if (format == ImageFormat.JPEG)
+                mCameraParams.setPreviewFormat(format);
 
         mCamera.setParameters(mCameraParams);
     }
@@ -169,10 +162,8 @@ public class PhoneCamera {
 
         String timeStamp = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date());
 
-        File mediaFile = new File(mediaStorageDir.getPath() + File.separator +
+        return new File(mediaStorageDir.getPath() + File.separator +
                 "palos-teste-"+ timeStamp + ".jpg");
-
-        return mediaFile;
     }
 
     public void destroy() {

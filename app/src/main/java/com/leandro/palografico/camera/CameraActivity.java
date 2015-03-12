@@ -1,16 +1,11 @@
-package com.leandro.palografico;
+package com.leandro.palografico.camera;
 
 import android.graphics.Bitmap;
-import android.support.v4.app.ShareCompat;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 
-import com.leandro.palografico.camera.CameraListener;
-import com.leandro.palografico.camera.CameraView;
-import com.leandro.palografico.camera.PhoneCamera;
+import com.leandro.palografico.Constantes;
+import com.leandro.palografico.R;
 import com.leandro.palografico.util.FullScreenActivity;
 
 import java.io.File;
@@ -19,13 +14,6 @@ import java.io.File;
 public class CameraActivity extends FullScreenActivity implements CameraListener {
 
     private PhoneCamera camera;
-    private CameraView cameraView;
-
-    @Override
-    protected void onDestroy() {
-        camera.destroy();
-        super.onDestroy();
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +21,7 @@ public class CameraActivity extends FullScreenActivity implements CameraListener
         setContentView(R.layout.activity_camera);
 
         camera = new PhoneCamera(this, "PALOGRAFICO", this);
-        cameraView = (CameraView) findViewById(R.id.cameraView);
+        CameraView cameraView = (CameraView) findViewById(R.id.cameraView);
         cameraView.setCamera(camera);
         camera.start();
 
@@ -43,6 +31,12 @@ public class CameraActivity extends FullScreenActivity implements CameraListener
                 camera.takePicture();
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        camera.destroy();
+        super.onDestroy();
     }
 
     @Override
