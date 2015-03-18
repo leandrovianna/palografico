@@ -8,4 +8,5 @@ public final class Constantes {
 //    public static final String BITMAP_EXTRA = APP_PACKAGE+".bitmap_extra";
     public static final String FILE_EXTRA = APP_PACKAGE+".file_extra";
     public static final String TAG = "Palografico";
+    public static final int IMAGE_FROM_GALLERY_RESQUEST_CODE = 1003;
 }

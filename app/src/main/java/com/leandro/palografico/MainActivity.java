@@ -1,7 +1,10 @@
 package com.leandro.palografico;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -48,7 +51,9 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void openGallery() {
-        //TODO: Fazer activity com as fotos de testes tiradas anteriomente
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        startActivityForResult(intent, Constantes.IMAGE_FROM_GALLERY_RESQUEST_CODE);
     }
 
     @Override
@@ -58,7 +63,7 @@ public class MainActivity extends ActionBarActivity {
         if (requestCode == Constantes.CAPTURE_IMAGE_REQUEST_CODE) {
 
             if (resultCode == RESULT_OK) {
-                Log.i("", "A foto foi tirada com sucesso e CameraActivity deu uma resposta");
+                Log.i(Constantes.TAG, "A foto foi tirada com sucesso e CameraActivity deu uma resposta");
 
                 File file = (File) data.getSerializableExtra(Constantes.FILE_EXTRA);
 
@@ -66,7 +71,43 @@ public class MainActivity extends ActionBarActivity {
                 intent.putExtra(Constantes.FILE_EXTRA, file);
                 startActivity(intent);
             }
+        } else if (requestCode == Constantes.IMAGE_FROM_GALLERY_RESQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+
+                File file = new File(getPath(data.getData()));
+
+                Intent intent = new Intent(this, CountObjectsActivity.class);
+                intent.putExtra(Constantes.FILE_EXTRA, file);
+                startActivity(intent);
+            }
         }
+    }
+
+    /**
+     * Retorna o caminho da imagem a partir de um image uri
+     * De: http://stackoverflow.com/questions/2169649/get-pick-an-image-from-androids-built-in-gallery-app-programmatically
+     * @param uri image uri
+     * @return O caminho da imagem
+     */
+    public String getPath(Uri uri) {
+        if (uri == null) {
+            Log.e(Constantes.TAG, "getPath(): uri is null");
+            return null;
+        }
+
+        String[] projection = {MediaStore.MediaColumns.DATA};
+        Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
+        if (cursor != null) {
+            //HERE YOU WILL GET A NULLPOINTER IF CURSOR IS NULL
+            //THIS CAN BE, IF YOU USED OI FILE MANAGER FOR PICKING THE MEDIA
+            cursor.moveToFirst();
+            int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
+            String filePath = cursor.getString(columnIndex);
+            cursor.close();
+            return filePath;
+        }
+        else
+            return uri.getPath();               // FOR OI/ASTRO/Dropbox etc
     }
 
     @Override
