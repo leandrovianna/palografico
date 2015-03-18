@@ -12,12 +12,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.leandro.palografico.imageproc.ImageObjectCounter;
-import com.leandro.palografico.imageproc.ImageObjectCounterListener;
 
 import java.io.File;
 
 
-public class CountObjectsActivity extends ActionBarActivity implements ImageObjectCounterListener {
+public class CountObjectsActivity extends ActionBarActivity implements ImageObjectCounter.Listener {
 
     private Button buttonInitCount;
     private ImageView imageView;
@@ -41,13 +40,7 @@ public class CountObjectsActivity extends ActionBarActivity implements ImageObje
 
             buttonInitCount = (Button) findViewById(R.id.buttonInitCount);
             imageView = (ImageView) findViewById(R.id.imageView);
-
-            imageView.post(new Runnable() {
-                @Override
-                public void run() {
-                    imageView.setImageBitmap(bitmap);
-                }
-            });
+            imageView.setImageBitmap(bitmap);
 
             buttonInitCount.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -67,10 +60,10 @@ public class CountObjectsActivity extends ActionBarActivity implements ImageObje
         loadingDialog.show();
     }
 
-
     @Override
-    public void update(Integer result) {
+    public void update(Integer result, Bitmap bitmap) {
         loadingDialog.hide();
+        imageView.setImageBitmap(bitmap);
         GUI.createMessageDialog("Resultado", "São " + result + " palos na imagem", this);
     }
 
