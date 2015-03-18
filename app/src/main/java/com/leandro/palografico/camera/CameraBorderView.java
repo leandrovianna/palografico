@@ -19,9 +19,9 @@ public class CameraBorderView extends TextureView implements TextureView.Surface
 
     private void drawBorder(Canvas canvas) {
         Paint strokePaint = new Paint();
-        strokePaint.setARGB(180, 0, 0, 0);
+        strokePaint.setARGB(100, 0, 0, 0);
         strokePaint.setStyle(Paint.Style.STROKE);
-        strokePaint.setStrokeWidth(100);
+        strokePaint.setStrokeWidth(canvas.getWidth()*0.2f);
 
         Rect r = canvas.getClipBounds();
         Rect outline = new Rect(1, 1, r.right-1, r.bottom-1);

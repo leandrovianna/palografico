@@ -7,4 +7,5 @@ public final class Constantes {
     public static final int CAPTURE_IMAGE_REQUEST_CODE = 1002;
 //    public static final String BITMAP_EXTRA = APP_PACKAGE+".bitmap_extra";
     public static final String FILE_EXTRA = APP_PACKAGE+".file_extra";
+    public static final String TAG = "Palografico";
 }

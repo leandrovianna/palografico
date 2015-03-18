@@ -42,7 +42,12 @@ public class CountObjectsActivity extends ActionBarActivity implements ImageObje
             buttonInitCount = (Button) findViewById(R.id.buttonInitCount);
             imageView = (ImageView) findViewById(R.id.imageView);
 
-            imageView.setImageBitmap(bitmap);
+            imageView.post(new Runnable() {
+                @Override
+                public void run() {
+                    imageView.setImageBitmap(bitmap);
+                }
+            });
 
             buttonInitCount.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -51,12 +56,12 @@ public class CountObjectsActivity extends ActionBarActivity implements ImageObje
                 }
             });
 
-            imageObjectCounter = new ImageObjectCounter();
-            imageObjectCounter.setListener(this);
         }
     }
 
     private void initCount() {
+        imageObjectCounter = new ImageObjectCounter();
+        imageObjectCounter.setListener(this);
         imageObjectCounter.execute(bitmap);
         loadingDialog = GUI.createLoadingDialog(this);
         loadingDialog.show();

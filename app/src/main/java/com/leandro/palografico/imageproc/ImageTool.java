@@ -1,13 +1,26 @@
 package com.leandro.palografico.imageproc;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Rect;
+import android.os.Environment;
+import android.util.Log;
+
+import com.leandro.palografico.Constantes;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.nio.MappedByteBuffer;
+import java.nio.channels.FileChannel;
 
 public class ImageTool {
 
 	/**
-	 * Imprime os pixels de uma {@link android.graphics.Bitmap} na tela
-	 * @param image BufferedImage a ter os pixels impressos na tela
+	 * Imprime os pixels de uma {@link android.graphics.Bitmap} no console
+	 * @param image imagem que os pixels serão impressos
 	 */
 	public static void printPixels(Bitmap image) {
 		//y relativo as linhas (menor que a Altura)
@@ -53,8 +66,8 @@ public class ImageTool {
 	
 	/**
 	 * Retorna uma matriz com valores 1 (para pixel de objeto) e 0 (para pixel de background)
-	 * @param image BufferedImage binarizada
-	 * @return
+	 * @param image imagem binarizada
+	 * @return matrix de inteiros com os valores
 	 */
 	public static int[][] createBinaryImageMatrix(Bitmap image) {
 
@@ -103,4 +116,18 @@ public class ImageTool {
 		
 		return matrix;
 	}
+
+    public static Bitmap cropBitmap(Bitmap src, Rect dst) {
+        Bitmap crop;
+        crop = Bitmap.createBitmap(dst.width(), dst.height(), Bitmap.Config.ARGB_8888);
+
+        for (int y = 0; y < src.getHeight(); ++y)
+            for (int x = 0; x < src.getWidth(); ++x)
+                if (y >= dst.top && y < dst.bottom
+                        && x >= dst.left && x < dst.right)
+                    crop.setPixel(x - dst.left, y - dst.top, src.getPixel(x, y));
+
+        return crop;
+    }
+
 }

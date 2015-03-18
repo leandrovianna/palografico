@@ -26,7 +26,7 @@ public class UnionFind {
 	
 	public static int ufMakeSet() {
 		labels[0] ++;
-		assert(labels[0] < nLabels);
+        if ((labels[0] >= nLabels)) throw new AssertionError();
 		labels[labels[0]] = labels[0];
 		return labels[0];
 	}
