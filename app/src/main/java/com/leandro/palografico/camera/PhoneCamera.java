@@ -10,6 +10,8 @@ import android.os.Environment;
 import android.util.Log;
 import android.view.SurfaceHolder;
 
+import com.leandro.palografico.Constantes;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -61,25 +63,38 @@ public class PhoneCamera {
         Camera.Parameters mCameraParams = mCamera.getParameters();
         mCameraParams.setRotation(90);
 
-        Camera.Size bestSize = null;
+        //Calcular o melhor tamanho de prévia e armazenar o aspecto dessa resolução
         List<Camera.Size> previewSizes = mCameraParams.getSupportedPreviewSizes();
-        bestSize = previewSizes.get(0);
-        for(int i = 1; i < previewSizes.size(); i++)
-            if ((previewSizes.get(i).width * previewSizes.get(i).height) > (bestSize.width * bestSize.height))
-                bestSize = previewSizes.get(i);
+        Camera.Size previewSize = previewSizes.get(0);
+        double aspectRatio = (double) previewSize.width / previewSize.height;
 
-        mCameraParams.setPreviewSize(bestSize.width, bestSize.height);
+        for (int i = 1; i < previewSizes.size(); i++)
+            if ((previewSizes.get(i).width * previewSizes.get(i).height) > (previewSize.width * previewSize.height)) {
+                previewSize = previewSizes.get(i);
+                aspectRatio = previewSize.width / previewSize.height;
+            }
 
-        List<Camera.Size> sizes = mCameraParams.getSupportedPictureSizes();
-        bestSize = sizes.get(0);
-        for(int i = 1; i < sizes.size(); i++)
-            if ((sizes.get(i).width * sizes.get(i).height) > (bestSize.width * bestSize.height))
-                bestSize = sizes.get(i);
+        Log.i(Constantes.TAG, "Aspect Ratio: "+aspectRatio);
 
-        mCameraParams.setPictureSize(bestSize.width, bestSize.height);
+        //Calcular o melhor tamano da imagem suportado que tenha o aspecto da resolução de prévia
+        List<Camera.Size> imageSizes = mCameraParams.getSupportedPictureSizes();
+        Camera.Size imageSize = imageSizes.get(0);
+        //mudar valores para as resoluções maiores serem selecionadas no for abaixo
+        imageSize.height = 9;
+        imageSize.width = 16;
+
+        for (int i = 0; i < imageSizes.size(); ++i)
+            if ((double) imageSizes.get(i).width / imageSizes.get(i).height == aspectRatio)
+                if ((imageSizes.get(i).width * imageSizes.get(i).height) > (imageSize.width * imageSize.height))
+                    imageSize = imageSizes.get(i);
+
+        Log.i(Constantes.TAG, "preview size: width:" + previewSize.width + " height:" + previewSize.height);
+        Log.i(Constantes.TAG, "image size: width:" + imageSize.width + " height:" + imageSize.height);
+
+        mCameraParams.setPreviewSize(previewSize.width, previewSize.height);
+        mCameraParams.setPictureSize(imageSize.width, imageSize.height);
 
         List<Integer> supportedPreviewFormats = mCameraParams.getSupportedPreviewFormats();
-
         for (int format : supportedPreviewFormats)
             if (format == ImageFormat.JPEG)
                 mCameraParams.setPreviewFormat(format);
