@@ -63,8 +63,20 @@ public class CountObjectsActivity extends ActionBarActivity implements ImageObje
     @Override
     public void update(Integer result, Bitmap bitmap) {
         loadingDialog.hide();
+        loadingDialog.dismiss();
         imageView.setImageBitmap(bitmap);
         GUI.createMessageDialog("Resultado", "São " + result + " palos na imagem", this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (imageObjectCounter != null)
+            imageObjectCounter.cancel(true);
+
+        if (loadingDialog != null)
+            loadingDialog.dismiss();
+
+        super.onDestroy();
     }
 
     @Override

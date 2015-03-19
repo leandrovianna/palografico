@@ -130,4 +130,22 @@ public class ImageTool {
         return crop;
     }
 
+    public static int determineThreshold(Bitmap bitmap) {
+        int threshold = 127;
+
+        int sum = 0;
+
+        for (int y = 0; y < bitmap.getHeight(); y++) {
+            for (int x = 0; x < bitmap.getWidth(); x++) {
+                sum += Color.red(bitmap.getPixel(x,y));
+            }
+        }
+
+        threshold = sum / (bitmap.getHeight() * bitmap.getWidth());
+
+        Log.i(Constantes.TAG, "threshold: "+threshold);
+
+        return threshold;
+    }
+
 }
