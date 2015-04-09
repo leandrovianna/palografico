@@ -1,20 +1,9 @@
 package com.leandro.palografico.imageproc;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Rect;
-import android.os.Environment;
 import android.util.Log;
-
-import com.leandro.palografico.Constantes;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.RandomAccessFile;
-import java.nio.MappedByteBuffer;
-import java.nio.channels.FileChannel;
 
 public class ImageTool {
 
@@ -130,22 +119,20 @@ public class ImageTool {
         return crop;
     }
 
-    public static int determineThreshold(Bitmap bitmap) {
-        int threshold = 127;
+    public static int[] calculateHistogram(Bitmap bitmap) {
 
-        int sum = 0;
+        int[] histogram = new int[256];
 
         for (int y = 0; y < bitmap.getHeight(); y++) {
             for (int x = 0; x < bitmap.getWidth(); x++) {
-                sum += Color.red(bitmap.getPixel(x,y));
+//                int h = Color.red(bitmap.getPixel(x,y));
+                int h = 0xFF & bitmap.getPixel(x,y);
+                ++histogram[h];
+
+                Log.i("Histogram", h+": "+histogram[h]);
             }
         }
 
-        threshold = sum / (bitmap.getHeight() * bitmap.getWidth());
-
-        Log.i(Constantes.TAG, "threshold: "+threshold);
-
-        return threshold;
+        return histogram;
     }
-
 }

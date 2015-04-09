@@ -15,7 +15,7 @@ public class HoshenKopelman {
 
 	public int countObjects(Bitmap image) {
 		int [][] matrix = ImageTool.createBinaryImageMatrix(image);
-		matrix = ImageTool.riseImageObjects(matrix, 2);
+//		matrix = ImageTool.riseImageObjects(matrix, 2);
 		
 		return runAlgorithm(matrix);
 	}

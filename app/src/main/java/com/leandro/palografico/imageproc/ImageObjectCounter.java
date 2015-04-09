@@ -44,7 +44,7 @@ public class ImageObjectCounter extends AsyncTask<Bitmap, Void, Integer> {
 
         bitmap = ImageTool.cropBitmap(bitmap, rect);
         bitmap = ImageTool.convertToGreyScale(bitmap);
-        bitmap = ImageTool.binaryImage(bitmap, ImageTool.determineThreshold(bitmap));
+        bitmap = ImageTool.binaryImage(bitmap, ImageThresholder.otsu(bitmap));
 
         return hoshenKopelman.countObjects(bitmap);
     }
