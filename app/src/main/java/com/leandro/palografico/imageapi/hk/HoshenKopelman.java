@@ -1,9 +1,9 @@
-package com.leandro.palografico.imageproc.hk;
+package com.leandro.palografico.imageapi.hk;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
 
-import com.leandro.palografico.imageproc.ImageTool;
+import com.leandro.palografico.imageapi.ImageTool;
 
 public class HoshenKopelman {
 

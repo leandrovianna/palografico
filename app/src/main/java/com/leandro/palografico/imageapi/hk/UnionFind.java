@@ -1,4 +1,4 @@
-package com.leandro.palografico.imageproc.hk;
+package com.leandro.palografico.imageapi.hk;
 
 /*
  * Implementado a partir do código de: https://gist.github.com/tobin/909424

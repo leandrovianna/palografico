@@ -1,10 +1,10 @@
-package com.leandro.palografico.imageproc;
+package com.leandro.palografico.imageapi;
 
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.os.AsyncTask;
 
-import com.leandro.palografico.imageproc.hk.HoshenKopelman;
+import com.leandro.palografico.imageapi.hk.HoshenKopelman;
 
 /**
  * Task que faz o processamento de uma imagem para contar os objetos contidos nela

@@ -1,9 +1,7 @@
 package com.leandro.palografico;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 public class GUI {
 

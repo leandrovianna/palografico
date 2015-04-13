@@ -1,4 +1,4 @@
-package com.leandro.palografico;
+package com.leandro.palografico.activity;
 
 import android.app.AlertDialog;
 import android.graphics.Bitmap;
@@ -11,7 +11,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.leandro.palografico.imageproc.ImageObjectCounter;
+import com.leandro.palografico.Constantes;
+import com.leandro.palografico.GUI;
+import com.leandro.palografico.R;
+import com.leandro.palografico.imageapi.ImageObjectCounter;
 
 import java.io.File;
 
